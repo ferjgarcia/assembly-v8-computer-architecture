@@ -100,10 +100,3 @@ Dibuja_arboles:
 
     ret
 
-    /* // ARBUSTOS
-        ldr x0,=Verde_arbol_claro
-		mov x1, 570  // X
-		mov x2, 200  // Y
-		mov x3, 10
-	bl Pinta_circulo */
-

@@ -488,85 +488,6 @@ Pinta_rectangulo:
 
     ret
 
-// ------------------------------------------- PINTA CUADRILATERO ------------------------------------------
-
-.globl Pinta_cuadrilatero
-Pinta_cuadrilatero:
-    // x0 -> color
-    // (x1,x2), (x3,x4), (x5,x6) y (x7,x8) extremos
-
-    str x1,[sp,-8]!
-    str x2,[sp,-8]!
-    str x3,[sp,-8]!
-    str x4,[sp,-8]!
-    str x5,[sp,-8]!
-    str x6,[sp,-8]!
-    str x7,[sp,-8]!
-    str x8,[sp,-8]!
-    str x11,[sp,-8]!
-    str x30,[sp,-8]!
-
-    xA .req x1
-    yA .req x2
-    xB .req x3
-    yB .req x4
-    xC .req x5
-    yC .req x6
-    xD .req x7
-    yD .req x8
-    aux .req x11
-
-        // Extremos A B C
-            bl Pinta_triangulo
-        
-        // Extremos A B D
-            // swap C y D
-                mov aux,xC
-                mov xC,xD
-                mov xD,aux
-
-                mov aux,yC
-                mov yC,yD
-                mov yD,aux
-            
-            bl Pinta_triangulo
-
-        // Extremos A C D
-            // swap B y C (C está en D por el anterior swap)
-                mov aux,xB
-                mov xB,xD
-                mov xD,aux
-
-                mov aux,yB
-                mov yB,yD
-                mov yD,aux
-            
-            bl Pinta_triangulo
-
-    .unreq xA
-    .unreq yA
-    .unreq xB
-    .unreq yB
-    .unreq xC
-    .unreq yC
-    .unreq xD
-    .unreq yD
-    .unreq aux
-
-    ldr x30,[sp],8
-    ldr x11,[sp],8
-    ldr x8,[sp],8
-    ldr x7,[sp],8
-    ldr x6,[sp],8
-    ldr x5,[sp],8
-    ldr x4,[sp],8
-    ldr x3,[sp],8
-    ldr x2,[sp],8
-    ldr x1,[sp],8
-
-    ret
-
-
 // ------------------------------------------- DIBUJA CIRCULO ------------------------------------------
 
 Dibuja_circulo_pintanding:
@@ -722,42 +643,6 @@ Dibuja_circulo:              // Algoritmo de Bresenham
     ldr x1,[sp],8
 
     ret
-
-// ------------------------------------------- PINTA CIRCULO TEXTURADO ------------------------------------------
-
-.globl Pinta_circulo_texturado
-Pinta_circulo_texturado:
-    // x0 -> color
-    // (x1,x2) -> centro
-    // x3 -> radio
-    // x25 -> sumo x25 al color
-    // x22 -> sumo x22 al 2do color
-
-    sumo .req x25
-    sumo2 .req x22
-
-    str x0,[sp,-8]!
-    str x24,[sp,-8]!
-    str x3,[sp,-8]!
-    str x30,[sp,-8]!
-
-        Pinta_circulo_texturado_while:
-            bl Dibuja_circulo
-            add x0,x0,sumo
-            add x24,x24,sumo2
-            sub x3,x3,1
-            cbnz x3,Pinta_circulo_texturado_while
-
-    ldr x30,[sp],8
-    ldr x3,[sp],8
-    ldr x24,[sp],8
-    ldr x0,[sp],8
-
-    .unreq sumo
-    .unreq sumo2
-
-    ret
-
 
 // ------------------------------------------- PINTA CIRCULO ------------------------------------------
 

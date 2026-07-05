@@ -34,7 +34,7 @@ main:
     bl _auto
 	bl Car_animation
 
-	ldr x14, =Linea_blanca_costado_1
+	ldr x14, =Verde
 	// inicializo el auto
     mov x10, #640
     mov x11, #0
